@@ -63,7 +63,7 @@ alpha = 0.01;
 computeCost(X, y, theta)
 
 % run gradient descent
-theta = gradientDescent(X, y, theta, alpha, iterations);
+[theta, jhist] = gradientDescent(X, y, theta, alpha, iterations);
 
 % print theta to screen
 fprintf('Theta found by gradient descent: ');
@@ -74,6 +74,8 @@ hold on; % keep previous plot visible
 plot(X(:,2), X*theta, '-')
 legend('Training data', 'Linear regression')
 hold off % don't overlay any more plots on this figure
+figure(4);
+plot(jhist);
 
 % Predict values for population sizes of 35,000 and 70,000
 predict1 = [1, 3.5] *theta;
