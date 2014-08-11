@@ -12,7 +12,7 @@ m1 = ones(size(y));
 thetaFilter = ones(length(theta),1);
 thetaFilter(1) = 0;
 
-Htheta = sigmoid(X*theta)
+Htheta = sigmoid(X*theta);
 logHtheta = log(Htheta);
 logHmtheta = log(m1-Htheta);
 stheta = theta(2:length(theta));
@@ -21,8 +21,6 @@ J = (1/m)*sum((-y.*logHtheta)-((m1-y).*(logHmtheta))) + (lambda/(2*m))*(stheta'*
 
 
 % You need to return the following variables correctly 
-theta
-thetaFilter
 grad = ((1/m)*(Htheta - y)'*X)'+(lambda/m)*(theta.*thetaFilter);
 
 % ====================== YOUR CODE HERE ======================
