@@ -7,7 +7,9 @@ function p = predict(theta, X)
 m = size(X, 1); % Number of training examples
 
 % You need to return the following variables correctly
-p = zeros(m, 1);
+S = sigmoid(X*theta);
+
+p = S > 0.5;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Complete the following code to make predictions using
