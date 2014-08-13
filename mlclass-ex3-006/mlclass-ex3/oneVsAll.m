@@ -51,11 +51,22 @@ X = [ones(m, 1) X];
 
 
 
+% X : [ p1, p2, p3, pn;
+%       p1, p2, p3, pn; ]
 
+% Y:  [ 1 4 5 2 5 6 7]
+%
 
-
-
-
+% thetas= [theta1 for label 1 theta2 for label 1 thetan for label 1;
+%          theta1 for label 2 theta2 for label 2 thetan for label 2;...]
+initial_theta = zeros(n + 1, 1);
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+for c = 1:num_labels
+    
+    [theta] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+    all_theta(c,:) = theta';
+    
+end
 
 
 
