@@ -22,10 +22,17 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
+% Theta1 has size 25 x 401 25 nodes par 400 dimensions + 1 bias
+% Theta2 has size 10 x 26  10 nodes par 26 dimensions + 1 bias           
+             
 % Setup some useful variables
 m = size(X, 1);
          
-
+X = [ones(m,1) X];  %(m x n+1)
+z2 = X * Theta1'; %(m x 25
+a2 = [ones(m,1) sigmoid(z2)];
+z3 = a2 * Theta2';
+%a3 = sigmoid(z3);
 
 
 % You need to retuthe frn ollowing variables correctly 
@@ -36,28 +43,33 @@ m = size(X, 1);
 % need to recode y
 
 yr = []; % m x k
-yt = y';
+size(y)
+yt = y;
 for c=1:num_labels
     yr = [yr (yt==c)];
 end
 
 
-thetaX = X * theta'; %  m x k
+%thetaX = X * theta'; %  m x k
+thetaX = z3;
 hTheta = sigmoid(thetaX); % m x k
 lht = log(hTheta); % m x k -- log( h(theta X))
 lomht = log(1-hTheta); % m x k
-
 a = -yr .* lht; % m x k
 b = (1-yr).* lomht; % m x k
 c = a - b; % m x k
 
-J = (-1/m)*sum(sum(c, 2),1)
+reg = (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2,2),1)+sum(sum(Theta2(:,2:end).^2,2),1));
 
 
 
 
+J = (1/m)*sum(sum(c, 2),1) + reg;
 
-J = 0;
+
+
+
+%J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
