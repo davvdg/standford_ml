@@ -33,8 +33,9 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % Setup some useful variables
 m = size(X, 1);
          
-X = [ones(m,1) X];  %(m x k1)
-z2 = X * Theta1'; %(m x 25)
+X = [ones(m,1) X];  %(m x k1) (5000 x 401)
+a1 = X;
+z2 = a1 * Theta1'; %(m x 25) (5000 x 25)
 a2 = [ones(m,1) sigmoid(z2)]; % ( m x k2)
 z3 = a2 * Theta2'; %( m x k3)
 %a3 = sigmoid(z3);
@@ -48,12 +49,10 @@ z3 = a2 * Theta2'; %( m x k3)
 % need to recode y
 
 yr = []; % m x k3
-size(y)
 yt = y;
 for c=1:num_labels
     yr = [yr (yt==c)];
 end
-
 
 %thetaX = X * theta'; %  m x k3
 thetaX = z3;
@@ -74,16 +73,24 @@ J = (1/m)*sum(sum(c, 2),1) + reg;
 del3 = hTheta - yr; % m x k3
 
 gz2 = sigmoidGradient(z2); %(m x 25)
+%fprintf('size del3\n');
+%size(del3) %(5000 x 10)
+%size(Theta2) % (10 x 26)
+Theta2ByDel3 = del3 * Theta2; % (5000 x 26)
+%fprintf('size Theta2ByDel3\n');
+%size(Theta2ByDel3) %(5000 x 26)
 
-del2 = del3 * Theta2'; % (k2 x k3)' x (m x k3) -> m x k3 x k3 x k2 = m x k2
+del2 = Theta2ByDel3(:, 2:end).*gz2; % (5000 x 25) .* (5000 x 25)
 
 
 
 
 
 %J = 0;
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+regThet1 = [zeros(size(Theta1,1), 1) Theta1(:, 2:end)];
+regThet2 = [zeros(size(Theta2,1), 1) Theta2(:, 2:end)];
+Theta1_grad = (1/m)*(zeros(size(Theta1))+ del2'*a1) + (lambda/m)*regThet1; %(25 x 401) 
+Theta2_grad = (1/m)*(zeros(size(Theta2))+ del3'*a2) + (lambda/m)*regThet2; %(10 x 26)
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
