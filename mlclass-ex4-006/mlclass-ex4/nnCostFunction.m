@@ -25,7 +25,38 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % Setup some useful variables
 m = size(X, 1);
          
-% You need to return the following variables correctly 
+
+
+
+% You need to retuthe frn ollowing variables correctly 
+
+% X: m x n // theta: k x n
+% theta1 
+
+% need to recode y
+
+yr = []; % m x k
+yt = y';
+for c=1:num_labels
+    yr = [yr (yt==c)];
+end
+
+
+thetaX = X * theta'; %  m x k
+hTheta = sigmoid(thetaX); % m x k
+lht = log(hTheta); % m x k -- log( h(theta X))
+lomht = log(1-hTheta); % m x k
+
+a = -yr .* lht; % m x k
+b = (1-yr).* lomht; % m x k
+c = a - b; % m x k
+
+J = (-1/m)*sum(sum(c, 2),1)
+
+
+
+
+
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
