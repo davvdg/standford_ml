@@ -1,37 +1,24 @@
 function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
-%LINEARREGCOSTFUNCTION Compute cost and gradient for regularized linear 
-%regression with multiple variables
-%   [J, grad] = LINEARREGCOSTFUNCTION(X, y, theta, lambda) computes the 
-%   cost of using theta as the parameter for linear regression to fit the 
-%   data points in X and y. Returns the cost in J and the gradient in grad
+%COSTFUNCTIONREG Compute cost and gradient for logistic regression with regularization
+%   J = COSTFUNCTIONREG(theta, X, y, lambda) computes the cost of using
+%   theta as the parameter for regularized logistic regression and the
+%   gradient of the cost w.r.t. to the parameters. 
 
 % Initialize some useful values
 m = length(y); % number of training examples
 
-% You need to return the following variables correctly 
-J = 0;
-grad = zeros(size(theta));
+% X m x n
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Compute the cost and gradient of regularized linear 
-%               regression for a particular choice of theta.
-%
-%               You should set J to the cost and grad to the gradient.
-%
+size(X)
+size(theta)
+size(y)
+a = (X*theta) - y; %(m x 1)
+c = theta; % n x 1
+c(1,:) = zeros(1,size(c,2)); % ( n x 1, first line is zero)
+size(c)
 
+J = (1/(2*m))*(a'*a)+(lambda/(2*m))*(c'*c);
+grad = (1/m)* (X'*a) + (lambda/m)*c  % (n x 1)
 
-
-
-
-
-
-
-
-
-
-
-% =========================================================================
-
-grad = grad(:);
 
 end
