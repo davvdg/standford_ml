@@ -1,4 +1,6 @@
 function submit(partId, webSubmit)
+putenv("https_proxy", "http://proxy.ign.fr:3128");
+putenv("http_proxy", "http://proxy.ign.fr:3128");
 %SUBMIT Submit your code and output to the ml-class servers
 %   SUBMIT() will connect to the ml-class server and submit your solution
 

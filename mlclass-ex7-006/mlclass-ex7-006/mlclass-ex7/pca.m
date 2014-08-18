@@ -21,7 +21,8 @@ S = zeros(n);
 %
 
 
-
+cMat = (1/m)*(X'*X);
+[U,S,D] = svd(cMat);
 
 
 

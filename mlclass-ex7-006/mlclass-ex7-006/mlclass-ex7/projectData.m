@@ -19,7 +19,8 @@ Z = zeros(size(X, 1), K);
 %
 
 
-
+uReduce = U(:,1:K); % n x k
+Z = X * uReduce; % X: m x n --  m x k    m x n x n x k
 
 % =============================================================
 
